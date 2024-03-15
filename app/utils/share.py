@@ -18,7 +18,7 @@ from app.utils.system import get_public_ip, readable_size
 if TYPE_CHECKING:
     from app.models.user import UserResponse
 
-from config import CLASH_SUBSCRIPTION_TEMPLATE, SINGBOX_SUBSCRIPTION_TEMPLATE, SINGBOX_MUX_CONFIGURATION
+from config import CLASH_SUBSCRIPTION_TEMPLATE, SINGBOX_SUBSCRIPTION_TEMPLATE, SINGBOX_MUX_CONFIGURATION, SINGBOX_DEFAULT_OUTBOUNDS
 
 SERVER_IP = get_public_ip()
 
@@ -578,6 +578,8 @@ class SingBoxConfiguration(str):
         self.config = json.loads(template)
         mux_template = render_template(SINGBOX_MUX_CONFIGURATION)
         self.mux_config = json.loads(mux_template)
+        default_outbounds = render_template(SINGBOX_DEFAULT_OUTBOUNDS)
+        self.default_outbounds = json.loads(outbounds_template)
 
     def add_outbound(self, outbound_data):
         self.config["outbounds"].append(outbound_data)
